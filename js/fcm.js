@@ -7,10 +7,13 @@ const CONFIG = {
 firebase.initializeApp(CONFIG);
 
 // Retrieve Firebase Messaging object.
-const messaging = firebase.messaging()
+const messaging = firebase.messaging();
 
-requestPermission();
-monitorTokenRefresh();
+navigator.serviceWorker.register('./firebase-messaging-sw.js').then(() => {
+  requestPermission();
+  monitorTokenRefresh();
+});
+
 
 
 /* =============== PRIVATE FUNCTION ================== */
