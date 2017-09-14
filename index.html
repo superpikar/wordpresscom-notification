@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Wordpress Notification</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/css/uikit.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <div class="uk-container">
+    <section id="app" class="uk-section">
+      <h1 class="uk-heading-divider">Hello</h1>
+      <p>This is my experiment about push notification</p>
+      <p>You will see an incoming notification when your wordpress.com site updated.</p>
+
+      <button v-if="state==='INITIAL'" disabled class="uk-button uk-button-primary">Checking ... </button>
+      <button v-if="state==='NOTSUPPORTED'" disabled class="uk-button uk-button-primary">Push Notification is not supported</button>
+      <button v-if="state==='SUBSCRIBED'" class="uk-button uk-button-secondary" @click="unsubscribeUser">Disable Push Messaging</button>
+      <button v-if="state==='NOTSUBSCRIBED'" class="uk-button uk-button-primary" @click="subscribeUser">Enable Push Messaging</button>
+      <button v-if="state==='BLOCKED'" disabled class="uk-button uk-button-danger">Push Messaging Blocked</button>
+
+      <div class="uk-alert uk-alert-success" v-if="state==='SUBSCRIBED'">
+        <p>You are <strong>subscribed</strong> to the push notification</p>
+        <p>${subscription | stringify}</p>
+      </div>
+      <div class="uk-alert uk-alert-danger" v-if="state==='NOTSUBSCRIBED'">
+        <p>You are <strong>not subscribed</strong> to the push notification</p>
+      </div>
+
+      <div class="reference">
+        Reference :
+        <ul>
+          <li>Fundamental Push Notification <a href="https://developers.google.com/web/fundamentals/getting-started/codelabs/push-notifications/">https://developers.google.com/web/fundamentals/getting-started/codelabs/push-notifications/</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
