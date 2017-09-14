@@ -9,11 +9,13 @@ firebase.initializeApp(CONFIG);
 // Retrieve Firebase Messaging object.
 const messaging = firebase.messaging();
 
-navigator.serviceWorker.register('./firebase-messaging-sw.js').then(() => {
+// define own service worker. follow https://stackoverflow.com/a/41701594/1843755
+navigator.serviceWorker.register('./firebase-messaging-sw.js').then((registration) => {
+  messaging.useServiceWorker(registration);
+
   requestPermission();
   monitorTokenRefresh();
 });
-
 
 
 /* =============== PRIVATE FUNCTION ================== */
