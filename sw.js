@@ -19,7 +19,7 @@ self.addEventListener('push', (event) => {
 /**
  * when user click the notification
  */
-self.addEventListener('notifivationClick', (event) => {
+self.addEventListener('notificationClick', (event) => {
   console.log('[ServiceWorker] - notification clicked');
   event.notification.close();
   event.waitUntil(

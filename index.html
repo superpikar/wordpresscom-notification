@@ -16,33 +16,53 @@
   <div class="uk-container">
     <section id="app" class="uk-section">
       <h1 class="uk-heading-divider">Hello</h1>
-      <p>This is my experiment about push notification</p>
+      <p>This is my experiment about firebase cloud messaging</p>
       <p>You will see an incoming notification when your wordpress.com site updated.</p>
 
-      <button v-if="state==='INITIAL'" disabled class="uk-button uk-button-primary">Checking ... </button>
-      <button v-if="state==='NOTSUPPORTED'" disabled class="uk-button uk-button-primary">Push Notification is not supported</button>
-      <button v-if="state==='SUBSCRIBED'" class="uk-button uk-button-secondary" @click="unsubscribeUser">Disable Push Messaging</button>
-      <button v-if="state==='NOTSUBSCRIBED'" class="uk-button uk-button-primary" @click="subscribeUser">Enable Push Messaging</button>
-      <button v-if="state==='BLOCKED'" disabled class="uk-button uk-button-danger">Push Messaging Blocked</button>
-
-      <div class="uk-alert uk-alert-success" v-if="state==='SUBSCRIBED'">
+      <div class="uk-alert uk-alert-success" v-if="state==='GRANTED'">
         <p>You are <strong>subscribed</strong> to the push notification</p>
-        <p>${subscription | stringify}</p>
+        <div class="uk-form-stacked">
+          <div>
+            <label class="uk-form-label">Current Token</label>
+            <div class="uk-form-controls">
+              <textarea class="uk-textarea" rows="5" v-model="currentToken" disabled></textarea>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="uk-alert uk-alert-danger" v-if="state==='NOTSUBSCRIBED'">
+      <div class="uk-alert uk-alert-danger" v-if="state==='INITIAL'">
         <p>You are <strong>not subscribed</strong> to the push notification</p>
       </div>
 
-      <div class="reference">
+      <div class="uk-alert">
+        Try to send notification via POST request using CURL or POSTMAN.
+        <pre>
+https://fcm.googleapis.com/fcm/send
+Content-Type: application/json
+Authorization: key=AIzaSyC...akjgSX0e4    // firebase cloud messaging server key
+
+{ "notification": {
+    "title": "Background Message Title",
+    "body": "Background message body",
+    "click_action" : "https://dummypage.com"
+  },
+  "to" : "eEz-Q2sG8nQ:APA91bHJQRT0JJ..."    // currentToken of the client
+}
+        </pre>
+      </div>
+      <div class="uk-alert">
         Reference :
         <ul>
-          <li>Fundamental Push Notification <a href="https://developers.google.com/web/fundamentals/getting-started/codelabs/push-notifications/">https://developers.google.com/web/fundamentals/getting-started/codelabs/push-notifications/</a></li>
+          <li><a href="https://firebase.google.com/docs/cloud-messaging/js/client">https://firebase.google.com/docs/cloud-messaging/js/client</a></li>
+          <li><a href="https://firebase.google.com/docs/cloud-messaging/js/receive">https://firebase.google.com/docs/cloud-messaging/js/receive</a></li>
         </ul>
       </div>
     </section>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-messaging.js"></script>
   <script src="js/index.js"></script>
 </body>
 
